@@ -1,0 +1,17 @@
+@startuml
+skinparam conditionStyle diamond
+skinparam RectangleCornerRadius 20
+
+partition "Deliver Order" {
+    :Order; <<object>>
+    
+    if ( ) then ([else])
+      :Regular Delivery;
+    else ([Rush Order])
+      :Overnight Delivery;
+    endif
+    
+    ' This merged point is styled as the final Order object
+    :Order; <<object>>
+}
+@enduml

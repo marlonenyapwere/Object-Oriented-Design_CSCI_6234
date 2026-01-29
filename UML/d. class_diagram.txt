@@ -1,0 +1,66 @@
+@startuml
+' Figure 3.1 - A simple class diagram
+
+class Customer {
+  + name : String [1]
+  + address : String [0..1]
+  + getCreditRating() : String
+}
+
+class CorporateCustomer {
+  + contactName : String
+  + creditRating : String
+  + creditLimit : Money
+  + billForMonth(Integer) : void
+  + remind() : void
+}
+
+class PersonalCustomer {
+  + creditCardNumber : String
+}
+
+class Order {
+  + dateReceived : Date [0..1]
+  + isPrepaid : Boolean [1]
+  + number : String [1]
+  + price : Money
+  + dispatch() : void
+  + close() : void
+}
+
+class OrderLine {
+  + quantity : Integer
+  + price : Money
+}
+
+class Employee {
+}
+
+' Inheritance (Generalization)
+Customer <|-- CorporateCustomer
+Customer <|-- PersonalCustomer
+
+' Associations
+Customer "1" --> "*" Order : places >
+Order "*" --> "1" Customer : belongs to <
+
+Order "1" --> "*" OrderLine : contains >
+OrderLine "*" --> "1" Order
+
+Employee "0..1" --> "*" Order : salesRep
+Order "*" --> "0..1" Employee
+
+' Ordered collection annotation
+note on link
+  (ordered)
+end note
+
+' Constraint
+note top of Order
+  { if Order.customer.getCreditRating is "poor"
+    then Order.isPrepaid must be true }
+end note
+
+' Hide empty methods
+hide empty members
+@enduml

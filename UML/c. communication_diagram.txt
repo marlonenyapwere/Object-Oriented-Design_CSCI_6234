@@ -1,0 +1,34 @@
+@startuml
+' Setting the style to match the rounded rectangles in the image
+skinparam rectangle {
+    roundCorner 25
+    BackgroundColor white
+    ArrowColor black
+}
+
+' Defining the elements (Objects represented as rectangles)
+rectangle "an Order" as Order
+rectangle "an Order Line" as OrderLine
+rectangle "a Product" as Product
+rectangle "a Customer" as Customer
+
+' External trigger (arrow from top)
+() " " as start
+start --> Order : 1: calculatePrice
+
+' Self-calls on Order
+Order -right-> Order : " 1.4: calculateBasePrice()\n 1.5: calculateDiscounts()"
+
+' Relationship: Order to Order Line
+Order -- OrderLine : " 1.1: getQuantity()\n 1.2: getProduct()"
+
+' Relationship: Order to Product
+Order -- Product : " 1.3: getPricingDetails"
+
+' Relationship: Order to Customer
+Order -- Customer : " 1.5.1: getDiscountInfo"
+
+' Structural link between Order Line and Product
+OrderLine -- Product
+
+@enduml

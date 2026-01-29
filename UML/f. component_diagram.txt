@@ -1,0 +1,35 @@
+@startuml
+' Force landscape layout
+left to right direction
+
+' Use UML2 component notation
+skinparam componentStyle uml2
+
+' ===== External Components =====
+component Till
+component "Message Queue" as MQ
+component "Accounting System" as AS
+
+' ===== Sales Server Container =====
+package "Sales Server" {
+    component "Transaction Processor" as TP
+    component "Accounting Driver" as AD
+}
+
+' ===== Interfaces =====
+() "sales message" as SalesMsg
+() "Accounting API" as AccAPI
+
+' ===== Connections =====
+Till --> SalesMsg
+SalesMsg --> MQ
+MQ ..> TP
+
+TP --> AccAPI
+AccAPI --> AD
+
+AD --> AccAPI
+AccAPI --> AS
+
+@enduml
+
