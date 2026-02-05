@@ -1,0 +1,78 @@
+@startuml
+Alice -> Bob : hello
+@enduml
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+' IMPORTANT: default stick-man actor style (matches picture)
+
+actor "Workflow Designer" as Designer
+actor "Workflow Engine" as Engine
+actor "System Administrator" as Admin
+
+rectangle "Extensible Workflow Engine" {
+
+  (Define Workflow) as UC1
+  (Execute Workflow) as UC2
+  (Evaluate Conditions) as UC3
+  (Manage Execution State) as UC4
+  (Handle Completion / Failure) as UC5
+  (Extend Workflow Engine) as UC6
+}
+
+Designer --> UC1
+Engine --> UC2
+Engine --> UC3
+Engine --> UC4
+Engine --> UC5
+Admin --> UC6
+
+note right of Designer
+  The Workflow Designer models business processes
+  by defining workflows composed of steps and
+  conditional transitions, independent of execution.
+end note
+
+note right of Engine
+  The Workflow Engine executes workflow instances,
+  evaluates conditions at runtime, and maintains
+  workflow execution state.
+end note
+
+note right of Admin
+  The System Administrator maintains and extends
+  the engine by adding new step types and system
+  configurations without changing the core logic.
+end note
+
+note right of UC1
+  Define Workflow allows the creation of workflows
+  as ordered steps connected by conditional paths.
+end note
+
+note right of UC2
+  Execute Workflow runs a workflow instance and
+  invokes step logic according to defined transitions.
+end note
+
+note right of UC3
+  Evaluate Conditions determines the next execution
+  path based on runtime data.
+end note
+
+note right of UC4
+  Manage Execution State tracks progress, current
+  step, and execution history.
+end note
+
+note right of UC5
+  Handle Completion / Failure manages successful
+  termination and failure scenarios consistently.
+end note
+
+note right of UC6
+  Extend Workflow Engine enables new step types
+  to be added without modifying the core engine.
+end note
+
+@enduml
